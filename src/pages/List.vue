@@ -6,9 +6,11 @@
   </q-page>
 </template>
 
+
 <script>
 import { axiosInstance } from 'boot/axios';
 import Item from '../components/Item';
+
 
 export default {
   name: 'List',
@@ -26,13 +28,16 @@ export default {
   methods: {
     getIssueList() {
       this.$q.loading.show({ delay: 250 });
-      let url = `/search/issues?q=+repo:${this.$store.getters.repositorySlug}+state:open`;
+      let url = `/search/issues?q=+repo:${this.$store.getters.repositorySlug}+state:open+is:issue`;
       if (this.$route.query.label) {
         url += `+label:${this.$route.query.label}`;
       }
       axiosInstance.get(url)
         .then((res) => {
           this.$set(this, 'postList', res.data.items);
+          this.$q.loading.hide();
+        })
+        .catch(() => {
           this.$q.loading.hide();
         });
     },
@@ -42,6 +47,7 @@ export default {
   },
 };
 </script>
+
 
 <style>
 </style>
