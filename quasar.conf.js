@@ -56,6 +56,7 @@ module.exports = function config() {
         'QPageSticky',
         'QFab',
         'QFabAction',
+        'QPagination',
       ],
 
       directives: [
